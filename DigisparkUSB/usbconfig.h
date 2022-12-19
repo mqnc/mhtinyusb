@@ -41,6 +41,11 @@ section at the end of this file).
 #define USB_CFG_DMINUS_BIT      3
 #define USB_CFG_DPLUS_BIT       6
 
+#elif defined (__AVR_ATtiny88__)
+#define USB_CFG_IOPORTNAME      D
+#define USB_CFG_DMINUS_BIT      2
+#define USB_CFG_DPLUS_BIT       1
+
 #elif defined (__AVR_ATtiny461__) || defined (__AVR_ATtiny861__)
 #define USB_CFG_IOPORTNAME      B
 #define USB_CFG_DMINUS_BIT      5
@@ -389,5 +394,14 @@ section at the end of this file).
 #define USB_INTR_VECTOR         PCINT1_vect
 #endif
 
+#if defined (__AVR_ATtiny88__)
+#define USB_INTR_CFG            PCMSK2
+#define USB_INTR_CFG_SET        (1 << USB_CFG_DPLUS_BIT)
+#define USB_INTR_CFG_CLR        0
+#define USB_INTR_ENABLE         PCICR
+#define USB_INTR_ENABLE_BIT     PCIE2
+#define USB_INTR_PENDING        PCIFR
+#define USB_INTR_PENDING_BIT    PCIF2
+#endif
 
 #endif /* __usbconfig_h_included__ */
